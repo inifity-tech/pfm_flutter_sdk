@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:equal_sdk_flutter/method_channel/equal_sdk_flutter_method_channel.dart';
+import 'package:pfm_sdk_flutter/method_channel/pfm_sdk_flutter_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

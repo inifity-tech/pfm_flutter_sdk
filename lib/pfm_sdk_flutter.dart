@@ -1,32 +1,32 @@
-import 'package:equal_sdk_flutter/equal_web_view.dart';
-import 'package:equal_sdk_flutter/model/equal_sdk_params.dart';
+import 'package:pfm_sdk_flutter/pfm_web_view.dart';
+import 'package:pfm_sdk_flutter/model/pfm_sdk_params.dart';
 import 'package:flutter/material.dart';
 
-abstract class EqualSDK {
-  static final EqualSDK _instance = _EqualSDKImplementation();
+abstract class PFMSDK {
+  static final PFMSDK _instance = _PFMSDKImplementation();
 
-  static EqualSDK get instance => _instance;
+  static PFMSDK get instance => _instance;
 
   void launchSDK({
     required BuildContext context,
-    required EqualSDKConfig equalSdkConfig,
+    required PFMSDKConfig pfmSdkConfig,
     required Function(dynamic) onSubmit,
     required Function(dynamic) onError,
   });
 }
 
-class _EqualSDKImplementation implements EqualSDK {
+class _PFMSDKImplementation implements PFMSDK {
   @override
   void launchSDK({
     required BuildContext context,
-    required EqualSDKConfig equalSdkConfig,
+    required PFMSDKConfig pfmSdkConfig,
     required Function(dynamic) onSubmit,
     required Function(dynamic) onError,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => EqualSDKLauncher(
-          equalSDKConfig: equalSdkConfig,
+        builder: (_) => PFMSDKLauncher(
+          equalSDKConfig: pfmSdkConfig,
           onSubmit: onSubmit,
           onError: onError,
         ),

@@ -1,7 +1,7 @@
-name: equal_sdk_flutter
+name: pfm_sdk_flutter
 description: "A new Flutter project."
 version: 0.0.1
-homepage:
+homepage: 
 
 environment:
   sdk: ^3.5.0

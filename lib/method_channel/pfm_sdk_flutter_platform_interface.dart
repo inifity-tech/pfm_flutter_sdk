@@ -1,4 +1,4 @@
-import 'package:equal_sdk_flutter/method_channel/equal_sdk_flutter_method_channel.dart';
+import 'package:pfm_sdk_flutter/method_channel/pfm_sdk_flutter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 

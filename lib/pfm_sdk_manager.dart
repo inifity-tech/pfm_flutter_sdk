@@ -1,15 +1,15 @@
-import 'package:equal_sdk_flutter/model/equal_sdk_params.dart';
-import 'package:equal_sdk_flutter/model/event_response.dart';
+import 'package:pfm_sdk_flutter/model/pfm_sdk_params.dart';
+import 'package:pfm_sdk_flutter/model/event_response.dart';
 
-class EqualSDKManager {
+class PFMSDKManager {
   static const String PROD_APP_URL = 'https://equal.in';
   static const String TEST_APP_URL = 'https://staging.equal.in';
 
-  String _getEqualDomain(EqualSDKConfig equalSDKConfig) =>
+  String _getEqualDomain(PFMSDKConfig equalSDKConfig) =>
       equalSDKConfig.env.contains('pre-prod') ? TEST_APP_URL : PROD_APP_URL;
 
   Future<String?> getGatewayURL(
-      EqualSDKConfig equalSDKConfig, Function(EventResponse) onError) async {
+      PFMSDKConfig equalSDKConfig, Function(EventResponse) onError) async {
     try {
 
       final String equalDomain = _getEqualDomain(equalSDKConfig);

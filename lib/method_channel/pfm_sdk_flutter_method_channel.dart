@@ -1,4 +1,4 @@
-import 'package:equal_sdk_flutter/method_channel/equal_sdk_flutter_platform_interface.dart';
+import 'package:pfm_sdk_flutter/method_channel/pfm_sdk_flutter_platform_interface.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

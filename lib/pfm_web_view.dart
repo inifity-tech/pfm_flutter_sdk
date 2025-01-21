@@ -1,25 +1,33 @@
-import 'package:equal_sdk_flutter/model/equal_sdk_params.dart';
-import 'package:equal_sdk_flutter/view/equal_in_app_web_view_helper.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:pfm_sdk_flutter/model/pfm_sdk_params.dart';
+import 'package:pfm_sdk_flutter/view/pfm_in_app_web_view_helper.dart';
 import 'package:flutter/material.dart';
 
-import 'equal_sdk_manager.dart';
+import 'pfm_sdk_manager.dart';
 
-class EqualSDKLauncher extends StatelessWidget {
-  const EqualSDKLauncher(
+class PFMSDKLauncher extends StatelessWidget {
+  const PFMSDKLauncher(
       {super.key,
       required this.equalSDKConfig,
       required this.onSubmit,
       required this.onError});
 
-  final EqualSDKConfig equalSDKConfig;
+  final PFMSDKConfig equalSDKConfig;
   final Function(dynamic) onSubmit;
   final Function(dynamic) onError;
-
+void _enableWebContentsDebugging() {
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        InAppWebViewController.setWebContentsDebuggingEnabled(true);
+      }
+    }
+  
   @override
   Widget build(BuildContext context) {
+    _enableWebContentsDebugging();
     return Scaffold(
       body: FutureBuilder(
-        future: EqualSDKManager().getGatewayURL(
+        future: PFMSDKManager().getGatewayURL(
           equalSDKConfig,
           (v) {
             onError(v.toJson());
@@ -35,7 +43,7 @@ class EqualSDKLauncher extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
-              return EqualInAppWebViewWidget(
+              return PFMInAppWebViewWidget(
                 initialUrl: snapShot.data ?? '',
                 onSubmit: onSubmit,
                 onError: onError,

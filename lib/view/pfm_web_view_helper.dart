@@ -1,8 +1,8 @@
-import 'package:equal_sdk_flutter/view/i_webview.dart';
+import 'package:pfm_sdk_flutter/view/i_webview.dart';
 import 'package:flutter/material.dart';
 
-class EqualWebViewHelper extends IWebView {
-  EqualWebViewHelper(
+class PFMWebViewHelper extends IWebView {
+  PFMWebViewHelper(
       {super.key,
       required super.initialUrl,
       required super.onSubmit,

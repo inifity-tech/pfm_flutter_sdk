@@ -1,14 +1,14 @@
-import 'package:equal_sdk_flutter/helper/web_view_settings_helper.dart';
-import 'package:equal_sdk_flutter/model/event_response.dart';
-import 'package:equal_sdk_flutter/view/i_webview.dart';
+import 'package:pfm_sdk_flutter/helper/web_view_settings_helper.dart';
+import 'package:pfm_sdk_flutter/model/event_response.dart';
+import 'package:pfm_sdk_flutter/view/i_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class EqualInAppWebViewWidget extends IWebView {
+class PFMInAppWebViewWidget extends IWebView {
   final ValueNotifier<InAppWebViewController?> _webViewController =
       ValueNotifier(null);
 
-  EqualInAppWebViewWidget({
+  PFMInAppWebViewWidget({
     required super.initialUrl,
     required super.onSubmit,
     required super.onError,
@@ -18,21 +18,35 @@ class EqualInAppWebViewWidget extends IWebView {
   void _handleSdkEvents(String url, BuildContext context) {
     try {
       final uri = Uri.parse(url); 
-      final message = uri.queryParameters['message'];
-      if (url.contains('URL_SDK_EVENT')) {
-        if (url.contains('ON_CLOSE')) {
+      if (url.contains('/close')) {
+        final message = uri.queryParameters['message'];
+        final status = uri.queryParameters['status'];
+        final statusCode = uri.queryParameters['status_code'];
+        if (status == "ERROR") {
           onError.call(
-            EventResponse(status: 'CLOSED_SDK', message: message).toJson(),
+            EventResponse(
+              status: 'ERROR', 
+              message: message,
+              eventType: "PFM_SDK_CALLBACK",
+              statusCode: statusCode
+            ).toJson(),
           );
         } else if (url.contains('ON_ERROR')) {
           onSubmit.call(EventResponse(
-                  status: 'ON_ERROR', message: message)
-              .toJson());
+              status: 'CLOSED', 
+              message: message,
+              eventType: "PFM_SDK_CALLBACK",
+              statusCode: statusCode
+            ).toJson());
         }
       }
     } catch (e) {
       onError.call(
-        EventResponse(status: 'ON_ERROR', message: e.toString()).toJson(),
+        EventResponse(
+              status: 'ERROR', 
+              eventType: "PFM_SDK_CALLBACK",
+              message: e.toString()
+            ).toJson(),
       );
     } finally {
       Navigator.pop(context);
@@ -86,9 +100,11 @@ class EqualInAppWebViewWidget extends IWebView {
                 onWebViewCreated: (controller) {
                   _webViewController.value = controller;
                 },
+
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
                   final url = navigationAction.request.url.toString();
-                  if (url.contains('URL_SDK_EVENT')) {
+                  print("Redirection URL ---->$url");
+                  if (url.contains('/pfm/close')) {
                     _handleSdkEvents(url, context);
                     return NavigationActionPolicy.CANCEL;
                   }
