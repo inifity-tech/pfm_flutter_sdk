@@ -1,4 +1,4 @@
-# equal_sdk_flutter
+# PFM FLUTTER SDK
 
 A new Flutter project.
 
