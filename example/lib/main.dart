@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:equal_sdk_flutter/equal_sdk_flutter.dart';
-import 'package:equal_sdk_flutter/model/equal_sdk_params.dart';
+import 'package:pfm_sdk_flutter/pfm_sdk_flutter.dart';
+import 'package:pfm_sdk_flutter/model/pfm_sdk_params.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {
@@ -34,6 +33,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late TextEditingController _mobile_number;
+  late TextEditingController _refID;
 
   final ValueNotifier<dynamic> _sdkResponse = ValueNotifier('');
 
@@ -42,13 +42,13 @@ class _HomePageState extends State<HomePage> {
 
   String _getEqualDomain() => TEST_APP_URL;
 
-  Future<String?> getAccessToken(String mobile_number) async {
+  Future<String?> getAccessToken(String mobile_number, String refID) async {
     try {
 
       final String equalDomain = _getEqualDomain();
 
       final Map<String, Object> bodyParams = {
-        "reference_id": Uuid().v4(),
+        "reference_id": refID,
         "exchange_application_id": "pfm.equal.pidg_testing",
         "user_profile": {
           "mobile_number": mobile_number
@@ -89,7 +89,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _mobile_number = TextEditingController(
-        text: '7987220817');
+        text: '');
+    _refID = TextEditingController(
+        text: '');
   }
 
   @override
@@ -107,13 +109,19 @@ class _HomePageState extends State<HomePage> {
                     label: Text("mobile number"), border: OutlineInputBorder()),
               ),
               const SizedBox(height: 10),
+              TextFormField(
+                controller: _refID,
+                decoration: const InputDecoration(
+                    label: Text("unique ref id"), border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    String token = await getAccessToken(_mobile_number.text) ?? "";
-                    EqualSDK.instance.launchSDK(
+                    String token = await getAccessToken(_mobile_number.text, _refID.text) ?? "";
+                    PFMSDK.instance.launchSDK(
                       context: context,
-                      equalSdkConfig: EqualSDKConfig(
+                      pfmSdkConfig: PFMSDKConfig(
                         token: token,
                       ),
                       onSubmit: (data) {
