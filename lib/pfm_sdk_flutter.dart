@@ -10,7 +10,7 @@ abstract class PFMSDK {
   void launchSDK({
     required BuildContext context,
     required PFMSDKConfig pfmSdkConfig,
-    required Function(dynamic) onSubmit,
+    required Function(dynamic) onClosed,
     required Function(dynamic) onError,
   });
 }
@@ -20,14 +20,14 @@ class _PFMSDKImplementation implements PFMSDK {
   void launchSDK({
     required BuildContext context,
     required PFMSDKConfig pfmSdkConfig,
-    required Function(dynamic) onSubmit,
+    required Function(dynamic) onClosed,
     required Function(dynamic) onError,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PFMSDKLauncher(
           equalSDKConfig: pfmSdkConfig,
-          onSubmit: onSubmit,
+          onClosed: onClosed,
           onError: onError,
         ),
       ),

@@ -10,7 +10,7 @@ class PFMInAppWebViewWidget extends IWebView {
 
   PFMInAppWebViewWidget({
     required super.initialUrl,
-    required super.onSubmit,
+    required super.onClosed,
     required super.onError,
   });
 
@@ -31,8 +31,8 @@ class PFMInAppWebViewWidget extends IWebView {
               statusCode: statusCode
             ).toJson(),
           );
-        } else if (url.contains('ON_ERROR')) {
-          onSubmit.call(EventResponse(
+        } else if (url.contains('CLOSED')) {
+          onClosed.call(EventResponse(
               status: 'CLOSED', 
               message: message,
               eventType: "PFM_SDK_CALLBACK",
@@ -70,7 +70,7 @@ class PFMInAppWebViewWidget extends IWebView {
             onPressed: () {
               onError.call(
                 EventResponse(
-                  status: 'CLOSED_SDK',
+                  status: 'CLOSED',
                 ).toJson(),
               );
               Navigator.of(context).pop();

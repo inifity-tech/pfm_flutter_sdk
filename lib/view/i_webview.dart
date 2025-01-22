@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class IWebView extends StatelessWidget {
   final String initialUrl;
-  final Function(dynamic) onSubmit;
+  final Function(dynamic) onClosed;
   final Function(dynamic) onError;
 
   IWebView(
       {super.key,
       required this.initialUrl,
-      required this.onSubmit,
+      required this.onClosed,
       required this.onError});
 
   @override

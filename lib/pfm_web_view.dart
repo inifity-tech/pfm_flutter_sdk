@@ -10,11 +10,11 @@ class PFMSDKLauncher extends StatelessWidget {
   const PFMSDKLauncher(
       {super.key,
       required this.equalSDKConfig,
-      required this.onSubmit,
+      required this.onClosed,
       required this.onError});
 
   final PFMSDKConfig equalSDKConfig;
-  final Function(dynamic) onSubmit;
+  final Function(dynamic) onClosed;
   final Function(dynamic) onError;
 void _enableWebContentsDebugging() {
       if (defaultTargetPlatform == TargetPlatform.android) {
@@ -45,7 +45,7 @@ void _enableWebContentsDebugging() {
             case ConnectionState.done:
               return PFMInAppWebViewWidget(
                 initialUrl: snapShot.data ?? '',
-                onSubmit: onSubmit,
+                onClosed: onClosed,
                 onError: onError,
               );
           }

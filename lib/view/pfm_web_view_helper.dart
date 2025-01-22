@@ -5,7 +5,7 @@ class PFMWebViewHelper extends IWebView {
   PFMWebViewHelper(
       {super.key,
       required super.initialUrl,
-      required super.onSubmit,
+      required super.onClosed,
       required super.onError});
 
   @override
