@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                       pfmSdkConfig: PFMSDKConfig(
                         token: token,
                       ),
-                      onSubmit: (data) {
+                      onClosed: (data) {
                         _sdkResponse.value = data;
                       },
                       onError: (data) {
