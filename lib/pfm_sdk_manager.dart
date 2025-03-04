@@ -2,11 +2,11 @@ import 'package:pfm_sdk_flutter/model/pfm_sdk_params.dart';
 import 'package:pfm_sdk_flutter/model/event_response.dart';
 
 class PFMSDKManager {
-  static const String PROD_APP_URL = 'https://equal.in';
-  static const String TEST_APP_URL = 'https://staging.equal.in';
+  static const String PROD_PFM_APP_URL = 'https://pfm.equal.in';
+  static const String UAT_PFM_APP_URL = 'https://uat.pfm.equal.in';
 
   String _getEqualDomain(PFMSDKConfig equalSDKConfig) =>
-      equalSDKConfig.env.contains('pre-prod') ? TEST_APP_URL : PROD_APP_URL;
+      equalSDKConfig.env.contains('production') ? PROD_PFM_APP_URL : UAT_PFM_APP_URL;
 
   Future<String?> getGatewayURL(
       PFMSDKConfig equalSDKConfig, Function(EventResponse) onError) async {
