@@ -17,7 +17,7 @@ class PFMInAppWebViewWidget extends IWebView {
   // SDK Event Handling
   void _handleSdkEvents(String url, BuildContext context) {
     try {
-      final uri = Uri.parse(url); 
+      final uri = Uri.parse(url);
       if (url.contains('/close')) {
         final message = uri.queryParameters['message'];
         final status = uri.queryParameters['status'];
@@ -25,28 +25,28 @@ class PFMInAppWebViewWidget extends IWebView {
         if (status == "ERROR") {
           onError.call(
             EventResponse(
-              status: 'ERROR', 
-              message: message,
-              eventType: "PFM_SDK_CALLBACK",
-              statusCode: statusCode
-            ).toJson(),
+                    status: 'ERROR',
+                    message: message,
+                    eventType: "PFM_SDK_CALLBACK",
+                    statusCode: statusCode)
+                .toJson(),
           );
         } else if (url.contains('CLOSED')) {
           onClosed.call(EventResponse(
-              status: 'CLOSED', 
-              message: message,
-              eventType: "PFM_SDK_CALLBACK",
-              statusCode: statusCode
-            ).toJson());
+                  status: 'CLOSED',
+                  message: message,
+                  eventType: "PFM_SDK_CALLBACK",
+                  statusCode: statusCode)
+              .toJson());
         }
       }
     } catch (e) {
       onError.call(
         EventResponse(
-              status: 'ERROR', 
-              eventType: "PFM_SDK_CALLBACK",
-              message: e.toString()
-            ).toJson(),
+                status: 'ERROR',
+                eventType: "PFM_SDK_CALLBACK",
+                message: e.toString())
+            .toJson(),
       );
     } finally {
       Navigator.pop(context);
@@ -82,6 +82,8 @@ class PFMInAppWebViewWidget extends IWebView {
     );
   }
 
+  final GlobalKey _webViewKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -95,12 +97,12 @@ class PFMInAppWebViewWidget extends IWebView {
           child: Stack(
             children: [
               InAppWebView(
+                key: _webViewKey,
                 initialUrlRequest: URLRequest(url: WebUri(initialUrl)),
                 initialSettings: getWebViewOptions(),
                 onWebViewCreated: (controller) {
                   _webViewController.value = controller;
                 },
-
                 shouldOverrideUrlLoading: (controller, navigationAction) async {
                   final url = navigationAction.request.url.toString();
                   print("Redirection URL ---->$url");
