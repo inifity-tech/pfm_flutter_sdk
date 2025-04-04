@@ -93,6 +93,7 @@ class PFMInAppWebViewWidget extends IWebView {
         await _showExitDialog(context);
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Stack(
             children: [
